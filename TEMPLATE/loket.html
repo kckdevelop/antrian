@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Manajemen Loket</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    .antrian-box {
+      transition: all 0.3s ease;
+    }
+    .antrian-box:hover {
+      transform: scale(1.05);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    }
+  </style>
+</head>
+<body class="bg-gray-100 h-screen overflow-hidden flex flex-col">
+
+  <!-- Header -->
+  <header class="bg-blue-600 text-white flex justify-between items-center px-6 py-3 text-xl font-semibold">
+    <div class="flex items-center">
+      <i class="fas fa-cogs mr-3"></i>
+      <span>MANAGEMENT LOKET</span>
+    </div>
+    <div id="time" class="text-lg bg-blue-700 px-4 py-1 rounded-lg"></div>
+  </header>
+
+  <!-- Main Content -->
+  <div class="flex flex-1 overflow-hidden">
+    
+    <!-- Sidebar -->
+    <aside class="w-64 bg-gray-800 text-white p-4">
+      <div class="mb-8">
+        <h2 class="text-xl font-bold mb-4 flex items-center">
+          <i class="fas fa-bars mr-2"></i> MENU ADMIN
+        </h2>
+        <nav class="space-y-2">
+          <a href="index.html" class="block p-3 rounded-lg bg-blue-600 hover:bg-blue-700 transition duration-200 flex items-center">
+            <i class="fas fa-tachometer-alt mr-3"></i> Dashboard
+          </a>
+          
+          <!-- Manajemen Layanan Dropdown -->
+      <div class="relative">
+        <button onclick="toggleDropdown('layananDropdown')" 
+                class="dropdown-button block w-full text-left p-3 rounded-lg hover:bg-gray-700 transition duration-200 flex items-center">
+          <i class="fas fa-tv mr-3"></i> Manajemen Layanan
+          <i class="fas fa-chevron-down ml-auto"></i>
+        </button>
+        <div id="layananDropdown" class="dropdown-menu absolute left-0 w-full bg-gray-800 rounded-lg hidden">
+          <a href="unit.html" class="block p-3 hover:bg-gray-700">Manajemen Unit</a>
+          <a href="#" class="block p-3 hover:bg-gray-700">Manajemen Loket</a>
+        </div>
+      </div>
+
+          <!-- Manajemen Antrian -->
+          <a href="#" class="block p-3 rounded-lg hover:bg-gray-700 transition duration-200 flex items-center">
+            <i class="fas fa-chart-bar mr-3"></i> Manajemen Antrian
+          </a>
+
+          <!-- Manajemen Users -->
+          <a href="#" class="block p-3 rounded-lg hover:bg-gray-700 transition duration-200 flex items-center">
+              <i class="fas fa-user-cog mr-3"></i> Manajemen Users
+            </a>
+            
+            <!-- Manajemen Display Dropdown -->
+            <div class="relative">
+          <button onclick="toggleDropdown('displayDropdown')" 
+                  class="dropdown-button block w-full text-left p-3 rounded-lg hover:bg-gray-700 transition duration-200 flex items-center">
+            <i class="fas fa-tv mr-3"></i> Manajemen Display
+            <i class="fas fa-chevron-down ml-auto"></i>
+          </button>
+          <div id="displayDropdown" class="dropdown-menu absolute left-0 w-full bg-gray-800 rounded-lg hidden">
+            <a href="#" class="block p-3 hover:bg-gray-700">Menu Tampil Display</a>
+            <a href="#" class="block p-3 hover:bg-gray-700">Atur Running Text</a>
+            <a href="#" class="block p-3 hover:bg-gray-700">Atur Video</a>
+          </div>
+        </div>
+        
+          <!-- Laporan dan Riwayat -->
+          <a href="#" class="block p-3 rounded-lg hover:bg-gray-700 transition duration-200 flex items-center">
+            <i class="fas fa-file-alt mr-3"></i> Laporan dan Riwayat
+          </a>
+        </nav>
+      </div>
+      
+      <div class="mt-auto">
+        <div class="bg-gray-700 p-3 rounded-lg">
+          <div class="text-sm">Admin: <span class="font-semibold">John Doe</span></div>
+          <div class="text-xs text-gray-400">Terakhir login: 14:30</div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="flex-1 p-6 overflow-hidden flex flex-col">
+      <h3 class="text-xl font-semibold mb-4">Daftar Loket</h3>
+      <div class="bg-white rounded-xl p-6 shadow-lg flex-1">
+        <table class="min-w-full bg-white">
+          <thead>
+            <tr class="w-full bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
+              <th class="py-3 px-6 text-left">Nama Loket</th>
+              <th class="py-3 px-6 text-left">Status</th>
+              <th class="py-3 px-6 text-left">Aksi</th>
+            </tr>
+          </thead>
+          <tbody class="text-gray-600 text-sm font-light">
+            <tr class="border-b border-gray-200 hover:bg-gray-100">
+              <td class="py-3 px-6">Loket A</td>
+              <td class="py-3 px-6"><span class="bg-green-200 text-green-800 status-badge">Aktif</span></td>
+              <td class="py-3 px-6">
+                <button class="bg-yellow-500 text-white py-1 px-3 rounded-lg hover:bg-yellow-600">Edit</button>
+                <button class="bg-red-500 text-white py-1 px-3 rounded-lg hover:bg-red-600">Hapus</button>
+              </td>
+            </tr>
+            <tr class="border-b border-gray-200 hover:bg-gray-100">
+              <td class="py-3 px-6">Loket B</td>
+              <td class="py-3 px-6"><span class="bg-green-200 text-green-800 status-badge">Aktif</span></td>
+              <td class="py-3 px-6">
+                <button class="bg-yellow-500 text-white py-1 px-3 rounded-lg hover:bg-yellow-600">Edit</button>
+                <button class="bg-red-500 text-white py-1 px-3 rounded-lg hover:bg-red-600">Hapus</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    // Update waktu real-time
+    function updateTime() {
+      const timeEl = document.getElementById('time');
+      const now = new Date();
+      const formatted = now.toLocaleTimeString('id-ID', { 
+        hour: '2-digit', 
+        minute: '2-digit', 
+        second: '2-digit' 
+      });
+      timeEl.textContent = formatted;
+    }
+    setInterval(updateTime, 1000);
+    updateTime();
+
+
+    // Toggle dropdown function
+function toggleDropdown(dropdownId) {
+  const dropdown = document.getElementById(dropdownId);
+  dropdown.classList.toggle('hidden');
+}
+
+// Close dropdowns when clicking outside
+window.onclick = function(event) {
+  if (!event.target.matches('.dropdown-button')) {
+    const dropdowns = document.querySelectorAll('.dropdown-menu');
+    dropdowns.forEach(dropdown => {
+      dropdown.classList.add('hidden');
+    });
+  }
+}
+  </script>
+</body>
+</html>
