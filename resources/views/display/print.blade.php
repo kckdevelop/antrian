@@ -22,12 +22,11 @@
         body {
             font-family: 'Poppins', sans-serif;
             background-color: #f4f6f9;
+            /* Perubahan di sini: Hilangkan center vertikal, atur padding atas */
             display: flex;
             flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            padding: 20px;
+            align-items: center; /* Pusatkan horizontal saja */
+            padding: 40px 20px; /* Padding atas 40px */
             color: #333;
         }
 
@@ -43,7 +42,7 @@
             border: 1px solid #e0e0e0;
         }
 
-        /* Efek Lubang Tiket di Sisi Kiri & Kanan (Opsional estetika) */
+        /* Efek Lubang Tiket di Sisi Kiri & Kanan */
         .ticket::before, .ticket::after {
             content: '';
             position: absolute;
@@ -84,7 +83,7 @@
             text-align: center;
             background: #fff;
             border-top: 2px dashed #e0e0e0;
-            margin-top: -1px; /* Hack untuk menyembunyikan garis di belakang lubang */
+            margin-top: -1px; 
         }
 
         .queue-label {
@@ -144,7 +143,7 @@
             text-transform: uppercase;
         }
 
-        /* Kredit Pembuat (Info Baru) */
+        /* Kredit Pembuat */
         .credit-box {
             margin-top: 15px;
             padding-top: 10px;
@@ -197,12 +196,14 @@
             border: 2px solid #ddd;
         }
 
-        /* Media Print (Pengaturan Saat Cetak) */
+        /* Media Print */
         @media print {
             body {
                 background: none;
-                padding: 0;
+                padding: 0; /* Hilangkan padding saat cetak */
                 margin: 0;
+                /* Pastikan posisi cetak dimulai dari atas */
+                justify-content: flex-start; 
             }
 
             .actions {
@@ -210,7 +211,7 @@
             }
 
             .ticket {
-                width: 80mm; /* Ukuran standar struk thermal */
+                width: 80mm;
                 min-height: auto;
                 border: none;
                 border-radius: 0;
@@ -219,13 +220,12 @@
                 padding: 0;
             }
 
-            /* Hilangkan efek lubang saat cetak */
             .ticket::before, .ticket::after {
                 display: none;
             }
 
             .ticket-header {
-                background: #fff; /* Putih untuk hemat tinta */
+                background: #fff;
                 color: #000;
                 border-bottom: 1px dashed #000;
                 padding: 10px 0;
@@ -270,11 +270,10 @@
                 border-top: 1px solid #ddd;
             }
             
-            /* Pastikan warna hitam pekat */
             * {
                 -webkit-print-color-adjust: exact;
                 print-color-adjust: exact;
-                color: #000 !important; /* Force hitam putih untuk printer thermal */
+                color: #000 !important;
             }
         }
     </style>
@@ -285,7 +284,7 @@
         <!-- Header -->
         <div class="ticket-header">
             <h1>Nomor Antrian</h1>
-            <div class="subtitle">Sistem Antrian Musaba</div>
+            <div class="subtitle">Sistem Pelayanan Terpadu</div>
         </div>
 
         <!-- Body -->
@@ -351,7 +350,7 @@
             }, 1000);
         }
 
-        // Opsional: Auto print saat halaman dibuka (uncomment jika diperlukan)
+        // Script auto print (opsional, hapus komentar jika ingin otomatis cetak)
         /*
         window.addEventListener('load', function() {
             window.print();
