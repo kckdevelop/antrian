@@ -2,363 +2,211 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <title>Cetak Nomor Antrian</title>
+    <title>Cetak Nomor Antrian - SMK Musaba</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Font Google untuk tampilan modern -->
+    <link href="https://googleapis.com" rel="stylesheet">
     <!-- Font Awesome untuk Ikon -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts: Poppins & Roboto Mono -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&family=Roboto+Mono:wght@500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cloudflare.com">
     
     <style>
-        /* Reset & Base */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        :root {
+            --primary-color: #0056b3;
+            --dark-color: #333;
+            --bg-color: #e9ecef;
         }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            font-family: 'Poppins', sans-serif;
-            background-color: #f4f6f9;
-            /* Perubahan di sini: Hilangkan center vertikal, atur padding atas */
+            font-family: 'Montserrat', sans-serif;
+            background: var(--bg-color);
+            padding: 40px 15px;
             display: flex;
             flex-direction: column;
-            align-items: center; /* Pusatkan horizontal saja */
-            padding: 40px 20px; /* Padding atas 40px */
-            color: #333;
+            align-items: center;
         }
 
-        /* Desain Tiket (Tampilan Layar) */
         .ticket {
-            width: 320px;
+            width: 350px;
             background: #fff;
-            padding: 0;
-            border-radius: 12px;
+            padding: 25px;
+            border-radius: 15px;
             box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            overflow: hidden;
             position: relative;
-            border: 1px solid #e0e0e0;
+            border: 1px solid #ddd;
         }
 
-        /* Efek Lubang Tiket di Sisi Kiri & Kanan */
+        /* Aksen dekoratif potongan tiket */
         .ticket::before, .ticket::after {
-            content: '';
+            content: "";
             position: absolute;
-            width: 20px;
             height: 20px;
-            background-color: #f4f6f9;
+            width: 20px;
+            background: var(--bg-color);
             border-radius: 50%;
-            top: 80px;
-            z-index: 1;
+            top: 75%;
         }
         .ticket::before { left: -10px; }
         .ticket::after { right: -10px; }
 
-        /* Header Tiket */
-        .ticket-header {
-            background: linear-gradient(135deg, #2c3e50, #4a6fa5);
-            color: #fff;
-            padding: 20px 15px;
-            text-align: center;
-        }
-        
-        .ticket-header h1 {
+        .header-title {
+            font-weight: 900;
             font-size: 18px;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            font-weight: 600;
-        }
-        
-        .ticket-header .subtitle {
-            font-size: 12px;
-            opacity: 0.9;
-            margin-top: 4px;
-        }
-
-        /* Badan Tiket */
-        .ticket-body {
-            padding: 25px 20px;
-            text-align: center;
-            background: #fff;
-            border-top: 2px dashed #e0e0e0;
-            margin-top: -1px; 
-        }
-
-        .queue-label {
-            font-size: 14px;
-            color: #7f8c8d;
+            color: var(--primary-color);
             text-transform: uppercase;
             letter-spacing: 2px;
             margin-bottom: 5px;
         }
 
-        .queue-number {
-            font-family: 'Roboto Mono', monospace;
-            font-size: 64px;
-            font-weight: 700;
-            color: #2c3e50;
-            line-height: 1;
-            margin-bottom: 20px;
-            text-shadow: 2px 2px 0px rgba(0,0,0,0.05);
+        .sub-header {
+            font-size: 12px;
+            color: #777;
+            margin-bottom: 15px;
         }
 
-        .info-row {
-            display: flex;
-            justify-content: space-between;
-            background-color: #f8f9fa;
-            padding: 10px 15px;
-            border-radius: 6px;
-            margin-bottom: 10px;
-            font-size: 13px;
-            border-left: 4px solid #4a6fa5;
+        .divider {
+            border-top: 2px dashed #ccc;
+            margin: 15px 0;
         }
 
-        .info-row div {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-weight: 600;
+        .nomor-label {
+            font-size: 14px;
+            font-weight: bold;
             color: #555;
         }
 
-        .info-row i {
-            color: #4a6fa5;
-        }
-
-        /* Footer Tiket */
-        .ticket-footer {
-            background-color: #fafafa;
-            padding: 15px;
-            text-align: center;
-            border-top: 2px dashed #e0e0e0;
-        }
-
-        .instruction {
-            font-size: 12px;
-            color: #e74c3c;
+        .nomor {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 72px;
             font-weight: bold;
-            margin-bottom: 10px;
-            text-transform: uppercase;
+            color: var(--dark-color);
+            margin: 10px 0;
         }
 
-        /* Kredit Pembuat */
-        .credit-box {
-            margin-top: 15px;
-            padding-top: 10px;
-            border-top: 1px solid #eee;
-            font-size: 9px;
-            color: #95a5a6;
+        .unit-box {
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 8px;
+            margin: 10px 0;
+            border-left: 5px solid var(--primary-color);
+        }
+
+        .unit-name {
+            font-weight: 700;
+            font-size: 18px;
+            color: var(--dark-color);
+        }
+
+        .waktu {
+            font-size: 12px;
+            color: #888;
+            margin-top: 5px;
+        }
+
+        .footer-msg {
+            font-size: 13px;
+            font-weight: 600;
+            margin: 20px 0 10px 0;
             line-height: 1.4;
         }
-        
-        .credit-box strong {
-            display: block;
-            margin-bottom: 2px;
-            color: #7f8c8d;
+
+        /* Bagian Kredit Siswa */
+        .credit {
+            font-size: 10px;
+            color: #999;
+            border-top: 1px solid #eee;
+            padding-top: 10px;
+            font-style: italic;
         }
 
-        /* Tombol Aksi */
-        .actions {
+        .no-print {
             margin-top: 30px;
             display: flex;
-            gap: 15px;
+            gap: 10px;
         }
 
         .btn {
             padding: 12px 24px;
             border: none;
-            border-radius: 8px;
-            font-family: 'Poppins', sans-serif;
-            font-weight: 600;
-            font-size: 14px;
+            border-radius: 30px;
+            font-weight: bold;
             cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
             display: flex;
             align-items: center;
             gap: 8px;
+            transition: 0.3s;
         }
 
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
+        .btn-print { background: var(--primary-color); color: white; }
+        .btn-back { background: #6c757d; color: white; }
+        .btn:hover { opacity: 0.9; transform: translateY(-2px); }
 
-        .btn-print {
-            background-color: #3498db;
-            color: white;
-        }
-        
-        .btn-back {
-            background-color: #fff;
-            color: #333;
-            border: 2px solid #ddd;
-        }
-
-        /* Media Print */
         @media print {
-            body {
-                background: none;
-                padding: 0; /* Hilangkan padding saat cetak */
-                margin: 0;
-                /* Pastikan posisi cetak dimulai dari atas */
-                justify-content: flex-start; 
-            }
-
-            .actions {
-                display: none !important;
-            }
-
-            .ticket {
-                width: 80mm;
-                min-height: auto;
-                border: none;
-                border-radius: 0;
-                box-shadow: none;
-                margin: 0;
-                padding: 0;
-            }
-
-            .ticket::before, .ticket::after {
-                display: none;
-            }
-
-            .ticket-header {
-                background: #fff;
-                color: #000;
-                border-bottom: 1px dashed #000;
-                padding: 10px 0;
-            }
-
-            .ticket-body {
-                padding: 15px 0;
-                border: none;
-            }
-
-            .queue-number {
-                color: #000;
-            }
-
-            .info-row {
+            body { background: white; padding: 0; }
+            .ticket { 
+                width: 100%; 
+                box-shadow: none; 
                 border: 1px solid #000;
-                background: #fff;
                 border-radius: 0;
-                margin: 5px 10px;
-                text-align: left;
-                justify-content: flex-start;
-                gap: 10px;
             }
-            
-            .info-row div {
-                color: #000;
-            }
-
-            .ticket-footer {
-                border-top: 1px dashed #000;
-                background: #fff;
-                padding: 10px 0;
-            }
-
-            .instruction {
-                color: #000;
-                font-weight: bold;
-            }
-
-            .credit-box {
-                color: #000;
-                border-top: 1px solid #ddd;
-            }
-            
-            * {
-                -webkit-print-color-adjust: exact;
-                print-color-adjust: exact;
-                color: #000 !important;
-            }
+            .no-print { display: none !important; }
+            .ticket::before, .ticket::after { display: none; }
         }
     </style>
 </head>
 <body>
 
-    <div class="ticket">
-        <!-- Header -->
-        <div class="ticket-header">
-            <h1>Nomor Antrian</h1>
-            <div class="subtitle">Sistem Pelayanan Terpadu</div>
+    <div class="ticket" id="printableTicket">
+        <div class="header-title">Antrian Sistem</div>
+        <div class="sub-header">SMK Muhammadiyah 1 Bantul</div>
+        
+        <div class="divider"></div>
+        
+        <div class="nomor-label">NOMOR ANTRIAN</div>
+        <div class="nomor">{{ $antrian->nomor_antrian }}</div>
+        
+        <div class="unit-box">
+            <div class="nomor-label">LOKET / UNIT</div>
+            <div class="unit-name">{{ $antrian->unit->unit }}</div>
         </div>
 
-        <!-- Body -->
-        <div class="ticket-body">
-            <div class="queue-label">Nomor Anda</div>
-            <div class="queue-number">{{ $antrian->nomor_antrian }}</div>
-
-            <div class="info-row">
-                <div>
-                    <i class="fas fa-user-tie"></i>
-                    <span>Loket:</span>
-                </div>
-                <div>{{ $antrian->unit->unit }}</div>
-            </div>
-
-            <div class="info-row">
-                <div>
-                    <i class="fas fa-calendar-alt"></i>
-                    <span>Tanggal:</span>
-                </div>
-                <div>{{ $antrian->created_at->format('d-m-Y') }}</div>
-            </div>
-
-            <div class="info-row">
-                <div>
-                    <i class="fas fa-clock"></i>
-                    <span>Waktu:</span>
-                </div>
-                <div>{{ $antrian->created_at->format('H:i') }}</div>
-            </div>
+        <div class="waktu">
+            <i class="far fa-calendar-alt"></i> {{ $antrian->created_at->format('d M Y') }} &nbsp;
+            <i class="far fa-clock"></i> {{ $antrian->created_at->format('H:i') }}
         </div>
 
-        <!-- Footer -->
-        <div class="ticket-footer">
-            <div class="instruction">
-                <i class="fas fa-exclamation-circle"></i> Harap Tunggu Dipanggil
-            </div>
-            
-            <!-- Informasi Pembuat -->
-            <div class="credit-box">
-                <strong>Developed by:</strong>
-                Siswa Siswi Jurusan RPL<br>
-                SMK Muhammadiyah 1 Bantul
-            </div>
+        <div class="footer-msg">
+            Silahkan tunggu nomor Anda dipanggil.<br>Terima Kasih atas Kunjungannya.
+        </div>
+
+        <div class="credit">
+            Developed by:<br>
+            <strong>Siswa-Siswi RPL SMK Muhammadiyah 1 Bantul</strong>
         </div>
     </div>
 
-    <!-- Tombol Aksi (Hanya tampil di layar) -->
-    <div class="actions no-print">
-        <button onclick="cetakDanKembali()" class="btn btn-print">
-            <i class="fas fa-print"></i> Cetak Tiket
+    <div class="no-print">
+        <button onclick="cetakLagi()" class="btn btn-print">
+            <i class="fas fa-print"></i> Cetak Lagi
         </button>
         <button onclick="window.location.href='{{ route('antrian.ambil') }}'" class="btn btn-back">
-            <i class="fas fa-arrow-left"></i> Ambil Antrian Baru
+            <i class="fas fa-arrow-left"></i> Kembali
         </button>
     </div>
 
     <script>
-        function cetakDanKembali() {
+        function cetakLagi() {
             window.print();
-            setTimeout(function() {
-                window.location.href = '{{ route('antrian.ambil') }}';
-            }, 1000);
         }
 
-        // Script auto print (opsional, hapus komentar jika ingin otomatis cetak)
-        /*
+        // Otomatis cetak dan kembali saat halaman dimuat
         window.addEventListener('load', function() {
             window.print();
             setTimeout(function() {
                 window.location.href = '{{ route('antrian.ambil') }}';
-            }, 1000);
+            }, 1000); 
         });
-        */
     </script>
 </body>
 </html>
