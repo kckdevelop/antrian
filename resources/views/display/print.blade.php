@@ -285,7 +285,7 @@
         <!-- Header -->
         <div class="ticket-header">
             <h1>Nomor Antrian</h1>
-            <div class="subtitle">Sistem Pelayanan Terpadu</div>
+            <div class="subtitle">Sistem Antrian Musaba</div>
         </div>
 
         <!-- Body -->
