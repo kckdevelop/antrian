@@ -2,210 +2,235 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <title>Cetak Nomor Antrian - SMK Musaba</title>
+    <title>Cetak Nomor Antrian</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Font Google untuk tampilan modern -->
-    <link href="https://googleapis.com" rel="stylesheet">
-    <!-- Font Awesome untuk Ikon -->
-    <link rel="stylesheet" href="https://cloudflare.com">
-    
+    <!-- Opsional: Ikon cetak -->
+    <script src="https://kit.fontawesome.com/your-font-awesome-key.js" crossorigin="anonymous"></script>
     <style>
-        :root {
-            --primary-color: #0056b3;
-            --dark-color: #333;
-            --bg-color: #e9ecef;
+        /* Reset dasar */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-
         body {
-            font-family: 'Montserrat', sans-serif;
-            background: var(--bg-color);
-            padding: 40px 15px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            font-family: 'Courier New', monospace;
+            text-align: center;
+            background: #f0f0f0;
+            padding: 30px 15px;
+            color: #000; /* Hitam pekat */
         }
 
         .ticket {
-            width: 350px;
+            max-width: 320px;
+            margin: 0 auto;
+            padding: 15px 10px;
             background: #fff;
-            padding: 25px;
-            border-radius: 15px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            position: relative;
-            border: 1px solid #ddd;
+            border: 1px solid #000; /* Garis tepi hitam tebal */
+            border-radius: 8px;
         }
 
-        /* Aksen dekoratif potongan tiket */
-        .ticket::before, .ticket::after {
-            content: "";
-            position: absolute;
-            height: 20px;
-            width: 20px;
-            background: var(--bg-color);
-            border-radius: 50%;
-            top: 75%;
-        }
-        .ticket::before { left: -10px; }
-        .ticket::after { right: -10px; }
-
-        .header-title {
-            font-weight: 900;
-            font-size: 18px;
-            color: var(--primary-color);
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 5px;
-        }
-
-        .sub-header {
-            font-size: 12px;
-            color: #777;
-            margin-bottom: 15px;
-        }
-
-        .divider {
-            border-top: 2px dashed #ccc;
-            margin: 15px 0;
-        }
-
-        .nomor-label {
-            font-size: 14px;
+        .header {
+            font-size: 24px;
             font-weight: bold;
-            color: #555;
+            color: #000;
+            margin-bottom: 3px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .sekolah {
+            font-size: 11px;
+            font-weight: bold;
+            color: #000;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         .nomor {
-            font-family: 'Share Tech Mono', monospace;
-            font-size: 72px;
+            font-size: 56px;
+            font-weight: 900; /* Bold maksimal */
+            color: #000;
+            margin: 20px 0;
+            line-height: 1.1;
+        }
+
+        .info {
+            font-size: 16px;
             font-weight: bold;
-            color: var(--dark-color);
-            margin: 10px 0;
-        }
-
-        .unit-box {
-            background: #f8f9fa;
-            padding: 10px;
-            border-radius: 8px;
-            margin: 10px 0;
-            border-left: 5px solid var(--primary-color);
-        }
-
-        .unit-name {
-            font-weight: 700;
-            font-size: 18px;
-            color: var(--dark-color);
+            color: #000;
+            margin-bottom: 8px;
         }
 
         .waktu {
-            font-size: 12px;
-            color: #888;
-            margin-top: 5px;
+            font-size: 14px;
+            font-weight: bold;
+            color: #000;
+            margin-bottom: 15px;
         }
 
-        .footer-msg {
-            font-size: 13px;
-            font-weight: 600;
-            margin: 20px 0 10px 0;
-            line-height: 1.4;
+        .footer {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #000;
+            font-weight: bold;
+            line-height: 1.5;
         }
 
-        /* Bagian Kredit Siswa */
-        .credit {
-            font-size: 10px;
-            color: #999;
-            border-top: 1px solid #eee;
-            padding-top: 10px;
-            font-style: italic;
+        .divider {
+            margin: 14px auto;
+            width: 90%;
+            border-top: 3px solid #000; /* Garis tebal, hitam pekat */
+            height: 1px;
         }
 
+        /* Tombol hanya muncul di layar */
         .no-print {
             margin-top: 30px;
             display: flex;
-            gap: 10px;
+            justify-content: center;
+            gap: 12px;
         }
 
         .btn {
-            padding: 12px 24px;
+            padding: 10px 20px;
             border: none;
-            border-radius: 30px;
+            border-radius: 6px;
+            font-size: 15px;
             font-weight: bold;
             cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            transition: 0.3s;
+            transition: all 0.2s;
         }
 
-        .btn-print { background: var(--primary-color); color: white; }
-        .btn-back { background: #6c757d; color: white; }
-        .btn:hover { opacity: 0.9; transform: translateY(-2px); }
+        .btn-print {
+            background-color: #000;
+            color: white;
+        }
 
+        .btn-print:hover {
+            background-color: #222;
+        }
+
+        .btn-back {
+            background-color: #555;
+            color: white;
+        }
+
+        .btn-back:hover {
+            background-color: #333;
+        }
+
+        /* Aturan cetak: pastikan semuanya hitam dan tebal */
         @media print {
-            body { background: white; padding: 0; }
-            .ticket { 
-                width: 100%; 
-                box-shadow: none; 
-                border: 1px solid #000;
-                border-radius: 0;
+            body {
+                background: white;
+                padding: 0;
+                color: #000;
             }
-            .no-print { display: none !important; }
-            .ticket::before, .ticket::after { display: none; }
+
+            .ticket {
+                max-width: 58mm;
+                padding: 10px 5px;
+                margin: 0 auto;
+                border-radius: 0;
+                font-size: 12px;
+            }
+
+            .header {
+                font-size: 12px;
+                font-weight: bold;
+            }
+
+            .nomor {
+                font-size: 40px;
+                font-weight: 900;
+                margin: 12px 0;
+            }
+
+            .info, .waktu {
+                font-size: 9px;
+                font-weight: bold;
+            }
+
+            .footer {
+                font-size: 8px;
+                font-weight: bold;
+            }
+
+            .suport{
+                font-size: 6px;
+                font-weight: bold;
+            }
+
+            .divider {
+                border-top: 3px solid #000;
+                margin: 12px auto;
+            }
+
+            .no-print {
+                display: none !important;
+            }
+
+            /* Paksa cetak background (opsional, tergantung printer) */
+            @page {
+                margin: 0.5cm;
+            }
         }
     </style>
 </head>
 <body>
-
-    <div class="ticket" id="printableTicket">
-        <div class="header-title">Antrian Sistem</div>
-        <div class="sub-header">SMK Muhammadiyah 1 Bantul</div>
-        
+    <div class="ticket">
+        <!-- Header -->
+        <div class="header">ANTRIAN PPDB</div>
+        <div class="sekolah">SMK MUHAMMADIYAH 1 BANTUL</div>
         <div class="divider"></div>
-        
-        <div class="nomor-label">NOMOR ANTRIAN</div>
+
+        <!-- Nomor Antrian -->
         <div class="nomor">{{ $antrian->nomor_antrian }}</div>
-        
-        <div class="unit-box">
-            <div class="nomor-label">LOKET / UNIT</div>
-            <div class="unit-name">{{ $antrian->unit->unit }}</div>
-        </div>
 
-        <div class="waktu">
-            <i class="far fa-calendar-alt"></i> {{ $antrian->created_at->format('d M Y') }} &nbsp;
-            <i class="far fa-clock"></i> {{ $antrian->created_at->format('H:i') }}
-        </div>
+        <div class="divider"></div>
 
-        <div class="footer-msg">
-            Silahkan tunggu nomor Anda dipanggil.<br>Terima Kasih atas Kunjungannya.
-        </div>
+        <!-- Loket -->
+        <div class="info">Loket: {{ $antrian->unit->unit }}</div>
 
-        <div class="credit">
-            Developed by:<br>
-            <strong>Siswa-Siswi RPL SMK Muhammadiyah 1 Bantul</strong>
+        <!-- Waktu -->
+        <div class="waktu">Waktu: <br>{{ $antrian->created_at->format('d-m-Y H:i') }}</div>
+        <br>
+        <div class="divider"></div>
+        <!-- Footer -->
+        <div class="footer">
+            HARAP TUNGGU DIPANGGIL<br>
+            TERIMA KASIH
         </div>
+        <div class="suport">Aplikasi Ini Karya Siswa RPL <br>SMK Muhammadiyah 1 Bantul</div>
     </div>
 
+    <!-- Tombol (Hanya di layar) -->
     <div class="no-print">
-        <button onclick="cetakLagi()" class="btn btn-print">
+        <button onclick="cetakDanKembali()" class="btn btn-print">
             <i class="fas fa-print"></i> Cetak Lagi
         </button>
         <button onclick="window.location.href='{{ route('antrian.ambil') }}'" class="btn btn-back">
-            <i class="fas fa-arrow-left"></i> Kembali
+            Kembali ke Antrian
         </button>
     </div>
 
     <script>
-        function cetakLagi() {
+        function cetakDanKembali() {
             window.print();
+            // Redirect setelah print dialog ditutup
+            setTimeout(function() {
+                window.location.href = '{{ route('antrian.ambil') }}';
+            }, 500); // Delay kecil untuk memastikan print selesai
         }
 
-        // Otomatis cetak dan kembali saat halaman dimuat
+        // Otomatis cetak + redirect saat halaman pertama kali dimuat
         window.addEventListener('load', function() {
             window.print();
             setTimeout(function() {
                 window.location.href = '{{ route('antrian.ambil') }}';
-            }, 1000); 
+            }, 500);
         });
     </script>
 </body>
