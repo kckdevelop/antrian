@@ -40,12 +40,12 @@
             letter-spacing: 1px;
         }
         .sekolah {
-            font-size: 11px;
+            font-size: 10px;
             font-weight: bold;
             color: #000;
             margin-bottom: 5px;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            
         }
 
         .nomor {
@@ -159,7 +159,7 @@
             }
 
             .suport{
-                font-size: 6px;
+                font-size: 8px;
                 font-weight: bold;
             }
 
@@ -189,20 +189,19 @@
         <!-- Nomor Antrian -->
         <div class="nomor">{{ $antrian->nomor_antrian }}</div>
 
-        <div class="divider"></div>
 
         <!-- Loket -->
         <div class="info">Loket: {{ $antrian->unit->unit }}</div>
 
         <!-- Waktu -->
         <div class="waktu">Waktu: <br>{{ $antrian->created_at->format('d-m-Y H:i') }}</div>
-        <br>
-        <div class="divider"></div>
+       
         <!-- Footer -->
         <div class="footer">
             HARAP TUNGGU DIPANGGIL<br>
             TERIMA KASIH
         </div>
+         <div class="divider"></div>
         <div class="suport">Aplikasi Ini Karya Siswa RPL <br>SMK Muhammadiyah 1 Bantul</div>
     </div>
 
